@@ -1,0 +1,19 @@
+{
+// Configures if the built-in HTML language suggests HTML5 tags, properties and values.
+"html.suggest.html5": true,
+
+ "emmet.triggerExpansionOnTab": true,
+ 
+ "emmet.includeLanguages": {
+    "javascript": "javascriptreact",
+    "vue-html": "html",
+    "razor": "html",
+    "plaintext": "jade"
+},
+"emmet.showExpandedAbbreviation": "inMarkupAndStylesheetFilesOnly",
+
+"emmet.showSuggestionsAsSnippets": true,
+"editor.snippetSuggestions": "top",
+"html-css-class-completion.enableEmmetSupport": true,
+
+}
