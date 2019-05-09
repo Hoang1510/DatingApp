@@ -13,9 +13,9 @@ export class AppComponent implements OnInit {
   constructor(private autheService: AuthService) {}
 
   ngOnInit() {
-    const helper = new JwtHelperService()
+    const helper = new JwtHelperService();
     const token = localStorage.getItem('token');
-    if(token){
+    if (token) {
       this.autheService.decodedToken =  helper.decodeToken(token);
     }
   }
