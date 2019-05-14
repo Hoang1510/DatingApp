@@ -9,14 +9,27 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DatingApp.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20190507093026_ExtendedUserClass")]
-    partial class ExtendedUserClass
+    [Migration("20190514090416_AddedLikeEntity")]
+    partial class AddedLikeEntity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.8-servicing-32085");
+
+            modelBuilder.Entity("DatingApp.API.Model.Like", b =>
+                {
+                    b.Property<int>("LikerId");
+
+                    b.Property<int>("LikeeId");
+
+                    b.HasKey("LikerId", "LikeeId");
+
+                    b.HasIndex("LikeeId");
+
+                    b.ToTable("Likes");
+                });
 
             modelBuilder.Entity("DatingApp.API.Model.Photo", b =>
                 {
@@ -28,6 +41,8 @@ namespace DatingApp.API.Migrations
                     b.Property<string>("Description");
 
                     b.Property<bool>("IsMain");
+
+                    b.Property<string>("PublicId");
 
                     b.Property<string>("Url");
 
@@ -88,10 +103,23 @@ namespace DatingApp.API.Migrations
                     b.ToTable("Values");
                 });
 
+            modelBuilder.Entity("DatingApp.API.Model.Like", b =>
+                {
+                    b.HasOne("DatingApp.API.Model.User", "Likee")
+                        .WithMany("Likers")
+                        .HasForeignKey("LikeeId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("DatingApp.API.Model.User", "Liker")
+                        .WithMany("Likees")
+                        .HasForeignKey("LikerId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
             modelBuilder.Entity("DatingApp.API.Model.Photo", b =>
                 {
                     b.HasOne("DatingApp.API.Model.User", "User")
-                        .WithMany("Photo")
+                        .WithMany("Photos")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
